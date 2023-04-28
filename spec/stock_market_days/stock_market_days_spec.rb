@@ -179,4 +179,27 @@ describe StockMarketDays do
     end
   end
 
+  context '#previous_market_day' do
+    subject { described_class.previous_market_day(before_date) }
+
+    context 'on a weekend' do
+      let(:before_date) { Date.new(2023,05,21) }
+
+      it { is_expected.to eql(Date.new(2023,05,19)) }
+    end
+
+    context 'on a Monday' do
+      let(:before_date) { Date.new(2023,05,22) }
+
+      it { is_expected.to eql(Date.new(2023,05,19)) }
+    end
+
+    context 'on a trading day after a holiday' do
+      let(:before_date) { Date.new(2023,06,20) }
+
+      it { is_expected.to eql(Date.new(2023,06,16)) }
+    end
+
+  end
+
 end

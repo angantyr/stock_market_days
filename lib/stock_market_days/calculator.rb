@@ -44,6 +44,19 @@ module StockMarketDays
       end
     end
 
+    def market_days_before(before_day, days)
+      before_index = market_days_list.index(
+        market_days_list.reverse.find { |md| md <= before_day }
+      )
+      if market_days_list[before_index] == before_day
+        market_days_list[before_index - days]
+      elsif market_days_list[before_index] < before_day
+        market_days_list[before_index - 1 + days]
+      else
+        raise "Calculator Error - This shouldn't happen in StockMarketDays#market_days_before"
+      end
+    end
+
 
   end
 end
